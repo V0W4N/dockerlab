@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  api-service:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      # Add build caching
+      cache_from:
+        - node:18-alpine
+    ports:
+      - "3002:3000"
+    volumes:
+      - .:/app:cached
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CALC_SERVICE_URL=http://calc-service:3001
+    command: npm run dev
+    depends_on:
+      - calc-service
+    networks:
+      - microservices-net
+
+  calc-service:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      # Add build caching
+      cache_from:
+        - node:18-alpine
+    command: npm run dev
+    expose:
+      - "3001"
+    volumes:
+      - .:/app:cached
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge

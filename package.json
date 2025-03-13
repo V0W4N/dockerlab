@@ -5,6 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "redeploy": "powershell -File redeploy.ps1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +14,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "axios": "^1.6.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }
